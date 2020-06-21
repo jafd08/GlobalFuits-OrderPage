@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"></script>
+</head>
+
+<h2>Productos</h2>
+<a href="../../../media/{{excel_file_name}}" download> DESCARGA NUESTROS PRECIOS ACTUALES</a>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm border-right">
+            <h6> Frutas y Verduras! </h6>
+
+
+            <table class="table table--striped table--lined table--loose" id='FV_table'>
+                <thead>
+                    <tr>
+                        <th class="tableHeaders1"> Producto <span class="sort-indicator icon-dropdown"
+                                title=" Sort "></span></th>
+                        <th class="tableHeaders1"> <span class="sort-indicator icon-dropdown" title=" Sort "></span>
+                        </th>
+                        <th class="tableHeaders1">Precio <span class="sort-indicator icon-dropdown"
+                                title=" Sort "></span></th>
+
+                    </tr>
+                </thead>
+
+                <tbody id='tbodyFVID'>
+                    {% for product in products.all %}
+                    {% if product.category.title == "Verduras" or product.category.title == "Frutas" %}
+                    <tr>
+                        <td> {{product.title}}</td>
+                        <td> {{product.unidad_o_kg}} </td>
+                        <td>{{product.value}}₡ </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm border-right">
+            <h6> Productos listos para consumir! </h6>
+
+
+            <table class="table table--striped table--lined table--loose" id='table_consumo'>
+                <thead>
+                    <tr>
+                        <th class="tableHeaders1"> Producto <span class="sort-indicator icon-dropdown"
+                                title=" Sort "></span></th>
+                        <th class="tableHeaders1"> Cantidad <span class="sort-indicator icon-dropdown"
+                                title=" Sort "></span></th>
+                        <th class="tableHeaders1">Precio <span class="sort-indicator icon-dropdown"
+                                title=" Sort "></span></th>
+
+                    </tr>
+                </thead>
+
+                <tbody id='tbody_consumo'>
+                    {% for product in products.all %}
+
+                    {% if product.category.title == "Productos listos" %}
+                    <tr>
+                        <td> {{product.title}}</td>
+                        <td> {{product.unidad_o_kg}} </td>
+                        <td>{{product.value}}₡ </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    function DataTableFunct2(tableID_, searchInputID_, search_placeholder) {
+        var dataTableAll = "#" + tableID_;
+
+        //sDom: 'lrtip',
+        $(dataTableAll).DataTable({
+
+            "paging": false,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ filas",
+                "zeroRecords": "Lo sentimos, no se encontró información",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": " ",
+                "infoFiltered": "(filtrado de _MAX_ records)",
+                "search": '<i class="fa fa-filter" aria-hidden="true"></i>',
+                'searchPlaceholder': 'Buscar...'
+            }
+        });
+    }
+    DataTableFunct2("table_consumo", "consumo_searchInput", "Productos Listos");
+    DataTableFunct2("FV_table", "FV_searchInput", "Verduras/Frutas");
+
+    $('.dataTables_filter input').addClass('form-control form-control-sm w-200');
+
+
+
+</script>
+
+{% endblock %}
