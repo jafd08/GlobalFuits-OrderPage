@@ -17,7 +17,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     active = models.BooleanField(default=True)
-    title = models.CharField("Nombre" , max_length=150, unique=True)
+    title = models.CharField( max_length=150, unique=True, verbose_name="Nombre")
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, verbose_name="Categoria")
     value = models.DecimalField(default=0.00, decimal_places=2, max_digits=10, verbose_name="Precio")
     unidad_o_kg = models.CharField(max_length=256, choices=[('kg', 'kg'), ('unidad', 'unidad')] , default="kg")

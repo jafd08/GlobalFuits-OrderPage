@@ -17,7 +17,7 @@
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Pagina Principal</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">{{ form_title }}</li>
                                 </ol>
                             </nav>
@@ -40,8 +40,16 @@
                         <div class="card">
                             <form method="post" class="form-horizontal"> {% csrf_token %}
                                 <div class="card-body">
-                                    <h4 class="card-title">Informacion Personal</h4>
+                                    <h4 class="card-title">Informacion del Pedido</h4>
+
+                                    {% if error %}
+                                    <h7 style="color:red"> {{error}} </h7>
+                                    <br>
+
+                                    {% endif %}
+
                                     {{ form }}
+
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body">

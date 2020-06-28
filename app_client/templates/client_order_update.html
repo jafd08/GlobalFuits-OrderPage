@@ -1,5 +1,12 @@
 {% extends 'base.html' %} {% load render_table from django_tables2 %}
 
+{% block extra_js %}
+    {% include 'ajax_calls.html' %}
+    {% include 'include/js.html' %}
+{% endblock %}
+
+
+
 {% block content %}
     <div class="page-wrapper">
         <div class="page-breadcrumb">
@@ -9,7 +16,7 @@
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{% url 'home' %}">Pagina Principal</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">{{ instance }}</li>
                             </ol>
                         </nav>
@@ -22,19 +29,22 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="header">
-                            <h5 class="card-title">Productos disponibles</h5>
-                            <input data-href='{% url "ajax-search" instance.id %}' type="text" class="form-control search_button" placeholder="Search">
+                            <h5 class="card-title">Productos</h5>
+                            <input data-href='{% url "client_ajax-search" instance.id %}' type="text" class="form-control search_button" placeholder="Search">
+
                         </div>
                         <div class="card-body" id="product_container">
 
-                            {% include 'include/product_container.html' %}
+
+                            {% include 'app_client/include/client_product_container.html' %}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card">
                         <div id='order_item_container' class="card-body">
-                            {% include 'include/order_container.html' %}
+                            <div id='qty_alrt' style="fontWeight = 'bold'"></div>
+                            {% include 'app_client/include/client_order_container.html' %}
                         </div>
                     </div>
 
@@ -55,6 +65,5 @@
 
 {% endblock %}
 
-{% block extra_js %}
-    {% include 'include/ajax_calls.html' %}
-{% endblock %}
+
+

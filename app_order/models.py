@@ -6,7 +6,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
-# import datetime
+import datetime
 # import pytz
 from django.utils import timezone
 from app_product.models import Product
@@ -31,7 +31,7 @@ class Order(models.Model):
     value = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
     discount = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
 
-    final_value = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
+    final_value = models.DecimalField("precio" , default=0.00, decimal_places=2, max_digits=20)
     is_paid = models.BooleanField(default=False)
     objects = models.Manager()
     browser = OrderManager()
@@ -78,10 +78,10 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name="Nombre")
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
     qty = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
+    price = models.DecimalField("Precio" ,default=0.00, decimal_places=2, max_digits=20)
     discount_price = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
     final_price = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
     total_price = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
