@@ -3,6 +3,11 @@
 
 <head>
     {% load staticfiles %}
+
+<!--    <link href="{% static 'fontawesome-all.css' %}" rel="stylesheet">-->
+    <link href="{% static 'client_styles.css' %}" rel="stylesheet">
+
+
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta content="" name="description">
@@ -24,6 +29,7 @@
     <!-- Bootstrap core CSS -->
 
     <style>
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -81,7 +87,15 @@
         }
         .border-right {
     border-right: 1px solid black;
+
 }
+ #id_date {
+  width: 250px;
+    }
+    #id_title {
+  width: 400px;
+    }
+
     </style>
     <!-- Custom styles for this template -->
 
@@ -96,6 +110,12 @@
                     GlobalFruits
 
                 </a>
+                {% if user_firstname %}
+                <h7 style="
+    right: 50%;
+    position: absolute;
+"> Bienvenido {{user_firstname}}!</h7>
+                {% endif %}
                 <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
                     class="navbar-toggler" data-target="#navbarNav" data-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
@@ -206,5 +226,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+{%  block extra_js %}{% endblock %}
 
 </html>

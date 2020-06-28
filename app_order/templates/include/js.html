@@ -20,3 +20,27 @@
 <script src="{% static 'assets/libs/moment/min/moment.min.js' %}"></script>
 <script src="{% static 'assets/libs/fullcalendar/dist/fullcalendar.min.js' %}"></script>
 <script src="{% static 'dist/js/pages/calendar/cal-init.js' %}"></script>
+
+<script type="text/javascript">
+function isFloat(n){
+    return Number(n) === n && n % 1 !== 0;
+}
+function isInt(n){
+    return Number(n) === n && n % 1 === 0;
+}
+
+function update_price_quantity(event) {
+    let qty = parseFloat(event.value)
+    console.log("qty: ", qty) ;
+    if (Number.isNaN(qty)){
+    console.log("not valid float") ;
+    document.getElementById('qty_alrt').innerHTML='<b>La cantidad escrita no es una cantidad valida!!!</b>';
+
+    }
+    else{
+
+    document.getElementById('qty_alrt').innerHTML= ' ';
+    }
+
+}
+    </script>

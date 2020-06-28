@@ -9,6 +9,8 @@ from app_order.models import Order,OrderItem, CURRENCY
 from app_accounts.models import Profile
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils import timezone
+
 
 """" CREATE ORDER IMPORTS"""
 from django.views.generic import ListView, CreateView, UpdateView
@@ -30,58 +32,27 @@ from django import forms
 def home(request):
     products = Product.objects
     excel_filename = get_object_or_404(Precios_Excel, nombre="precios")
-    print("excel_filename.excel_file: ", excel_filename.excel_file)
-    return render(request, 'app_client/home.html', {'excel_file_name': excel_filename.excel_file, 'products':products})
+    #print("excel_filename.excel_file: ", excel_filename.excel_file)
+    user_firstname = " "
+
+    try:
+        logged_user = request.user
+        user_obj = get_object_or_404(User, username=logged_user)
+        requestor_obj = get_object_or_404(Profile, user=user_obj)
+        fullname_splitted = requestor_obj.fullname.split()
+        print(fullname_splitted)
+        user_firstname = fullname_splitted[0]
+        print("user_firstname: ", user_firstname)
+    except:
+        print("no logged in user")
+
+    return render(request, 'app_client/home.html', {'excel_file_name': excel_filename.excel_file, 'products':products, "user_firstname":user_firstname})
 
 
 def myOrders(request):
     return render(request, 'app_client/home.html')
 
 
-@login_required
-def create(request):
-    #return render(request, 'app_client/create.html')
-    if request.method == 'POST':
-        if request.POST['value'] and request.POST['products']:
-            logged_user = request.user
-            user_obj = get_object_or_404(User, username=logged_user)
-            requestor_obj = get_object_or_404(Profile, user=user_obj)
-            ## continue from here...
-
-            new_order = Order()
-            new_order.requestor = requestor_obj
-            print(requestor_obj)
-            print(requestor_obj.fullname)
-            new_order.title = "Pedido para " + requestor_obj.Profile.fullname
-            #checkear si es requestor_obj.Profile.fullname , o requestor_obj.fullname ...
-
-            #we need to add the products here...
-
-            new_order.save()
-            # product = Product()
-            # product.title = request.POST['title']
-            # product.body = request.POST['body']
-            # 
-            # if request.POST['url'].startswith('http://') or request.POST['url'].startswith('https://'):
-            #     product.url = request.POST['url']
-            # else:
-            #     product.url = 'http://' + request.POST['url']
-
-            # product.icon = request.FILES['icon']
-            # product.image = request.FILES['image']
-            # product.pub_date = timezone.datetime.now()
-            # product.votes_total = 1
-            # product.hunter = request.user
-            # product.save()
-            Vote_objects = Vote(product=Product.objects.get(title=str(product)), voter=request.user)
-            Vote_objects.save()
-            return redirect('/products/' + str(product.id))
-        else:
-            return render(request, 'app_client/create.html', {'error': 'All fields are required'})
-    else:
-        return render(request, 'app_client/create.html')
-
-#
 # def detail(request, product_id):
 #     product = get_object_or_404(Product, pk=product_id)
 #     return render(request, 'app_client/detail.html', {'product': product})
@@ -109,7 +80,7 @@ def ajax_add_product(request, pk, dk):
     order_items = OrderItemTable(instance.order_items.all())
     RequestConfig(request).configure(order_items)
     data = dict()
-    data['result'] = render_to_string(template_name='include/order_container.html',
+    data['result'] = render_to_string(template_name='app_client/include/client_order_container.html',
                                       request=request,
                                       context={'instance': instance,
                                                'order_items': order_items
@@ -117,9 +88,70 @@ def ajax_add_product(request, pk, dk):
                                     )
     return JsonResponse(data)
 
+@login_required
+def ajax_search_products(request, pk):
+    instance = get_object_or_404(Order, id=pk)
+    q = request.GET.get('q', None)
+    products = Product.broswer.active().filter(title__startswith=q) if q else Product.broswer.active()
+    products = products[:12]
+    products = ProductTable(products)
+    RequestConfig(request).configure(products)
+    data = dict()
+    data['products'] = render_to_string(template_name='app_client/include/product_container.html',
+                                        request=request,
+                                        context={
+                                            'products': products,
+                                            'instance': instance
+                                        })
+    return JsonResponse(data)
 
+
+@login_required
+def ajax_modify_order_item(request, pk, action):
+    order_item = get_object_or_404(OrderItem, id=pk)
+    product = order_item.product
+    instance = order_item.order
+    if action == 'remove':
+        order_item.qty -= 1
+        product.qty += 1
+        if order_item.qty < 1: order_item.qty = 1
+    if action == 'add':
+        order_item.qty += 1
+        product.qty -= 1
+    product.save()
+    order_item.save()
+    if action == 'delete':
+        order_item.delete()
+    data = dict()
+    instance.refresh_from_db()
+    order_items = OrderItemTable(instance.order_items.all())
+    RequestConfig(request).configure(order_items)
+    data['result'] = render_to_string(template_name='app_client/include/client_order_container.html',
+                                      request=request,
+                                      context={
+                                          'instance': instance,
+                                          'order_items': order_items
+                                      }
+                                      )
+    return JsonResponse(data)
+
+@login_required
+def delete_order(request, pk):
+    instance = get_object_or_404(Order, id=pk)
+    instance.delete()
+    messages.warning(request, 'La orden ha sido eliminada!')
+    return redirect(reverse('home'))
+
+
+@login_required
+def done_order_view(request, pk):
+    instance = get_object_or_404(Order, id=pk)
+    instance.is_paid = True
+    instance.save()
+    return redirect(reverse('home'))
 
 class CreateOrderView(CreateView):
+    print("CreateOrderView ")
     template_name = 'client_form.html'
     form_class = OrderCreateForm
     #https://www.google.com/search?client=opera&hs=UBk&sxsrf=ALeKk02KdHk_3elPKEGVYFPBHKqe31BZog%3A1592274944881&ei=ADDoXv75NPOEwbkPs8almAo&q=django+hide+form+choicefield+&oq=django+hide+form+choicefield+&gs_lcp=CgZwc3ktYWIQAzIICCEQFhAdEB46BAgAEEc6BggAEBYQHjoECCMQJzoFCAAQywE6CAgAEBYQChAeUKjUA1jf8wNgx_QDaABwAXgAgAGmAYgB6BKSAQQwLjE4mAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab&ved=0ahUKEwj--eSzpoXqAhVzQjABHTNjCaMQ4dUDCAs&uact=5
@@ -132,6 +164,7 @@ class CreateOrderView(CreateView):
     # https://stackoverflow.com/questions/54275970/how-to-pass-database-queryset-objects-from-class-based-viewsclass-signupgeneri
 
     def get_context_data(self, **kwargs):
+        print("get_context_data")
         context = super(CreateOrderView, self).get_context_data(**kwargs)
         return context
 
@@ -145,6 +178,17 @@ class CreateOrderView(CreateView):
         user_obj = get_object_or_404(User, username=logged_user)
         requestor_obj = get_object_or_404(Profile, user=user_obj)
         #aqui le enviamos el requestor obj al new order...
+        now = timezone.now().date()
+        print("now: ", now)
+        order_date = form.instance.date
+        print("order_date: ", order_date)
+
+        was_orderdate_before_now = order_date < now
+        print("was_date1_before: ", was_orderdate_before_now)
+        if was_orderdate_before_now:
+            # try once with an old date.. then with a current date and then with future date
+            return render(self.request, 'client_form.html', {'error': 'La fecha del pedido no puede ser en el pasado!', "form": form})
+
 
         form.instance.requestor = requestor_obj
 
@@ -166,8 +210,8 @@ class OrderUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         instance = self.object
-        qs_p = Product.objects.filter(active=True)[:12]
-        products = ProductTable(qs_p)
+        queryset_products = Product.objects.filter(active=True)[:12]
+        products = ProductTable(queryset_products)
         order_items = OrderItemTable(instance.order_items.all())
         RequestConfig(self.request).configure(products)
         RequestConfig(self.request).configure(order_items)
