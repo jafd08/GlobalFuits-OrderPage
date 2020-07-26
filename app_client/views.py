@@ -40,15 +40,15 @@ def home(request):
         user_obj = get_object_or_404(User, username=logged_user)
         requestor_obj = get_object_or_404(Profile, user=user_obj)
         fullname_splitted = requestor_obj.fullname.split()
-        print(fullname_splitted)
+
         user_firstname = fullname_splitted[0]
-        print("user_firstname: ", user_firstname)
+
     except:
         print("no logged in user")
 
     return render(request, 'app_client/home.html', {'excel_file_name': excel_filename.excel_file, 'products':products, "user_firstname":user_firstname})
 
-
+@login_required
 def myOrders(request):
     return render(request, 'app_client/home.html')
 
@@ -151,7 +151,7 @@ def done_order_view(request, pk):
     return redirect(reverse('home'))
 
 class CreateOrderView(CreateView):
-    print("CreateOrderView ")
+
     template_name = 'client_form.html'
     form_class = OrderCreateForm
     #https://www.google.com/search?client=opera&hs=UBk&sxsrf=ALeKk02KdHk_3elPKEGVYFPBHKqe31BZog%3A1592274944881&ei=ADDoXv75NPOEwbkPs8almAo&q=django+hide+form+choicefield+&oq=django+hide+form+choicefield+&gs_lcp=CgZwc3ktYWIQAzIICCEQFhAdEB46BAgAEEc6BggAEBYQHjoECCMQJzoFCAAQywE6CAgAEBYQChAeUKjUA1jf8wNgx_QDaABwAXgAgAGmAYgB6BKSAQQwLjE4mAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab&ved=0ahUKEwj--eSzpoXqAhVzQjABHTNjCaMQ4dUDCAs&uact=5
@@ -164,12 +164,11 @@ class CreateOrderView(CreateView):
     # https://stackoverflow.com/questions/54275970/how-to-pass-database-queryset-objects-from-class-based-viewsclass-signupgeneri
 
     def get_context_data(self, **kwargs):
-        print("get_context_data")
+
         context = super(CreateOrderView, self).get_context_data(**kwargs)
         return context
 
     def get_success_url(self):
-        print("get_success_url")
         self.new_object.refresh_from_db()
         return reverse('client_update_order', kwargs={'pk': self.new_object.id})
 
@@ -179,16 +178,12 @@ class CreateOrderView(CreateView):
         requestor_obj = get_object_or_404(Profile, user=user_obj)
         #aqui le enviamos el requestor obj al new order...
         now = timezone.now().date()
-        print("now: ", now)
         order_date = form.instance.date
-        print("order_date: ", order_date)
 
         was_orderdate_before_now = order_date < now
-        print("was_date1_before: ", was_orderdate_before_now)
         if was_orderdate_before_now:
             # try once with an old date.. then with a current date and then with future date
-            return render(self.request, 'client_form.html', {'error': 'La fecha del pedido no puede ser en el pasado!', "form": form})
-
+            return render(self.request, 'client_form.html', {'error': 'La fecha del pedido no puede ser en el pasado ni hoy!', "form": form})
 
         form.instance.requestor = requestor_obj
 
@@ -199,7 +194,7 @@ class CreateOrderView(CreateView):
         return super().form_valid(form)
 
 
-class OrderUpdateView(UpdateView):
+class Client_OrderUpdateView(UpdateView):
     model = Order
     template_name = 'client_order_update.html'
     form_class = OrderEditForm
@@ -218,6 +213,34 @@ class OrderUpdateView(UpdateView):
         context.update(locals())
         return context
 
+@login_required
+def client_done_order_view(request, pk):
+    instance = get_object_or_404(Order, id=pk)
+    #instance.is_paid = True
+    instance.save()
+    return redirect(reverse('myOrders_name'))
 
+class OrderListView(ListView):
+    template_name = 'client_latest_orders.html'
+    model = Order
+    paginate_by = 50
 
+    def get_queryset(self):
+        qs = Order.objects.all()
+        logged_user = self.request.user
+        user_obj = get_object_or_404(User, username=logged_user)
+        requester_obj = get_object_or_404(Profile, user=user_obj)
+        qs_of_logged_user= Order.objects.filter(requestor=requester_obj).all()
+        #qs_of_logged_user = Order.objects.get(requestor=requester_obj).all()
+
+        if self.request.GET:
+            qs_of_logged_user = Order.filter_data(self.request, qs_of_logged_user)
+        return qs_of_logged_user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        orders = OrderTable(self.object_list)
+        RequestConfig(self.request).configure(orders)
+        context.update(locals())
+        return context
 """" HERE ARE THE CLIENT VIEW MY ORDERS"""

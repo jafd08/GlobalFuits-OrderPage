@@ -26,7 +26,7 @@ DEFAULT_REQUESTOR_ID= 1
 class Order(models.Model):
     date = models.DateField("fecha" , default=timezone.now)
     requestor = models.ForeignKey(Profile, on_delete=models.CASCADE, default=DEFAULT_REQUESTOR_ID, verbose_name="usuario")
-    title = models.CharField("titulo" , max_length=150)
+    title = models.CharField("Titulo Nuevo Pedido" , max_length=150)
     timestamp = models.DateField(auto_now_add=True)
     value = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
     discount = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
@@ -50,6 +50,9 @@ class Order(models.Model):
 
     def get_edit_url(self):
         return reverse('update_order', kwargs={'pk': self.id})
+
+    def client_get_edit_url(self):
+        return reverse('client_update_order', kwargs={'pk': self.id})
 
     def get_delete_url(self):
         return reverse('delete_order', kwargs={'pk': self.id})

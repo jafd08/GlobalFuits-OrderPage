@@ -28,9 +28,10 @@ from app_order.views import (HomepageView, OrderUpdateView, CreateOrderView, del
                           ajax_calculate_category_view)
 
 #from app_client.views import (home, create, detail, upvote)
-from app_client.views import (home)
+from app_client.views import (home, Client_OrderUpdateView)
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +42,7 @@ urlpatterns = [
     path('create/', CreateOrderView.as_view(), name='create-order'),
     path('create-auto/', auto_create_order_view, name='create_auto'),
     path('update/<int:pk>/', OrderUpdateView.as_view(), name='update_order'),
+    path('gestionar/<int:pk>/', login_required(Client_OrderUpdateView.as_view()), name='client_update_order'),
     path('done/<int:pk>/', done_order_view, name='done_order'),
     path('delete/<int:pk>/', delete_order, name='delete_order'),
     #path('action/<int:pk>/<slug:action>/', order_action_view, name='order_action'),
