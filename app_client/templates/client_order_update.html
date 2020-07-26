@@ -26,10 +26,10 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" style="padding:0px;">
                     <div class="card">
                         <div class="header">
-                            <h5 class="card-title">Productos</h5>
+                            <h5 class="card-title" style="padding:10px">Productos</h5>
                             <input data-href='{% url "client_ajax-search" instance.id %}' type="text" class="form-control search_button" placeholder="Search">
 
                         </div>
@@ -48,16 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="header"></div>
-                        <div class="card-body">
-                            <form method="post" class="form">{% csrf_token %}
-                                {{ form }}
-                                <br>
-                                <button type="submit" class="btn btn-success">Guardar Pedido</button>
-                            </form>
-                        </div>
-                    </div>
+
             </div>
         </div>
         </div>

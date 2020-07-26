@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {% load render_table from django_tables2 %} {% load static %}
+
+{% block content %}
+<div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Mis Ordenes</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Lista</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8" style=" flex: unset;max-width: inherit;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Ultimas Ordenes</h4>
+                        </div>
+                        <div class="comment-widgets scrollable">
+                            {% render_table orders %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
+<script>
+
+        $('.demo').each(function() {
+        $(this).minicolors({
+                control: $(this).attr('data-control') || 'hue',
+                position: $(this).attr('data-position') || 'bottom left',
+
+                change: function(value, opacity) {
+                    if (!value) return;
+                    if (opacity) value += ', ' + opacity;
+                    if (typeof console === 'object') {
+                        console.log(value);
+                    }
+                },
+                theme: 'bootstrap'
+            });
+
+        });
+        /*datwpicker*/
+        jQuery('.mydatepicker').datepicker();
+        jQuery('#datepicker-autoclose').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+    </script>
+
+    <script>
+        $('.result_button').click(function (event) {
+            event.preventDefault();
+            const btn = $(this);
+            const href = btn.attr('data-href');
+            const params = window.location.search.substr(1);
+            const url = href + '?' + params;
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                url: url,
+
+                success: function (data) {
+                    $('#result_container').html(data.result)
+                }
+            })
+        })
+    </script>
+{% endblock %}

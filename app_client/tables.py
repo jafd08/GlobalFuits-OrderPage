@@ -12,7 +12,7 @@ from app_order.models import OrderItem, Order
 class OrderTable(tables.Table):
     tag_final_value = tables.Column(orderable=False, verbose_name='Precio')
     action = tables.TemplateColumn(
-        '<a href="{{ record.get_edit_url }}" class="btn btn-info"><i class="fa fa-edit"></i></a>', orderable=False)
+        '<a href="{{ record.client_get_edit_url }}" class="btn btn-info"><i class="fa fa-edit"></i></a>', orderable=False)
 
     class Meta:
         model = Order
@@ -50,4 +50,4 @@ class OrderItemTable(tables.Table):
     class Meta:
         model = OrderItem
         template_name = 'django_tables2/bootstrap.html'
-        fields = ['product', 'tag_final_price', "qty"]
+        fields = ['product', 'tag_final_price', 'qty']

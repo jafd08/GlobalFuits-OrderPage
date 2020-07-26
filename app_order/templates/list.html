@@ -5,7 +5,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Order List</h4>
+                    <h4 class="page-title">Lista de Ordenes</h4>
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
@@ -22,7 +22,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Latest Orders</h4>
+                            <h4 class="card-title">Ultimas Ordenes</h4>
                         </div>
                         <div class="comment-widgets scrollable">
                             {% render_table orders %}
@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card">
-                        <div class="card-header"><h4>Filters</h4></div>
+                        <div class="card-header"><h4>Filtrar</h4></div>
                         <div class="card-body">
                             <form class="form" method="get">
                                 <div class="form-group row">
@@ -42,7 +42,7 @@
                                                    id="search_name"
                                                    name="search_name"
                                                    {% if request.GET.search_name %} value="{{ request.GET.search_name }}" {% else %}
-                                                    placeholder="Search Here" {% endif %}
+                                                    placeholder="Buscar aqui" {% endif %}
                                             >
                                         </div>
                                 </div>

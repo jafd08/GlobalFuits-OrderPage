@@ -4,6 +4,34 @@ import os
 import sys
 
 
+""" TO RUN SERVER...
+F:\DJANGO GlobalFruits\OrderPage\OrderPageDjango\blog_pos> 
+
+cd ..
+
+cd ..
+
+cd venvOrder
+
+cd OrderVENV
+
+cd Scripts
+
+activate
+
+cd .. 
+
+cd ..
+
+cd ..
+
+
+cd OrderPageDjango
+
+cd blog_pos
+
+py manage.py runserver"""
+
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blog_pos.settings')
     try:
