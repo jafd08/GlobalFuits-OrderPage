@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load staticfiles %}
+
+<!--    <link href="{% static 'fontawesome-all.css' %}" rel="stylesheet">-->
+    <link href="{% static 'client_styles.css' %}" rel="stylesheet">
+
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="Mark Otto, Jacob Thornton, and Bootstrap contributors" name="author">
+    <meta content="Jekyll v3.8.5" name="generator">
+
+    <title>GlobalFruits</title>
+
+    <link rel="icon" href="{% static 'rho.png' %}" type="image/icon type">
+
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+
+    <link href="https://getbootstrap.com/docs/4.3/examples/album/" rel="canonical">
+
+    <link href="{% static 'open-iconic/open-iconic-master/font/css/open-iconic-foundation.min.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+
+    <style>
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+
+            .container {
+                max-width: 1540px
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        #ProductInput {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #myUL li a {
+            border: 1px solid #ddd;
+            margin-top: -1px;
+            /* Prevent double borders */
+            background-color: #f6f6f6;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            display: block
+        }
+
+        #myUL li a:hover:not(.header) {
+            background-color: #eee;
+        }
+        .border-right {
+    border-right: 1px solid black;
+
+}
+ #id_date {
+  width: 250px;
+    }
+    #id_title {
+  width: 400px;
+    }
+
+    </style>
+    <!-- Custom styles for this template -->
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <img class="d-inline-block align-top" height="30" src="{% static 'rho.png' %}" width="30" />
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    GlobalFruits
+
+                </a>
+                {% if user_firstname %}
+                <h7 style="
+    right: 50%;
+    position: absolute;
+"> Bienvenido {{user_firstname}}!</h7>
+                {% endif %}
+                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler" data-target="#navbarNav" data-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    {% if user.is_authenticated %}
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+
+                            <a class="nav-link" href="{% url 'client_create_order' %}"> <span class="fi-plus"
+                                    title="Nuevo Pedido"></span> Nuevo Pedido </a>
+
+                        </li>
+                        <li class="nav-item ">
+
+
+                            <a class="nav-link" href="{% url 'myOrders_name' %}"> <span class="fi-plus"
+                                    title="Mis Pedidos"></span> Mis Pedidos </a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"> Cerrar
+                                sesión </a>
+                        </li>
+                        <form action="{% url 'logoutName' %}" id="logout" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" />
+                        </form>
+                    </ul>
+
+                    {% else %}
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'loginName' %}"> Iniciar Sesión </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register_name2' %}"> Crear Cuenta </a>
+                        </li>
+                    </ul>
+                    {% endif%}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <br>
+
+        {% block content %}
+        {% endblock %}
+
+
+
+<!--        <div style="padding: 20px;">-->
+<!--            <input type="text" id="ProductInput" onkeyup="searchProducts()" placeholder="Buscar Productos..."-->
+<!--                title="Escribe algun producto">-->
+<!--            <ul id="myUL">-->
+<!--                {% for product in products.all %}-->
+<!--                <li><a href="#">{{product.title}} {{product.value}}₡ {{product.unidad_o_kg}} </a></li>-->
+<!--                {% endfor %}-->
+
+<!--            </ul>-->
+
+<!--        </div>-->
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <footer class="text-muted">
+        <div class="container text-right">
+            <p> © Globalfruits {% now "Y" %}</p>
+
+        </div>
+    </footer>
+
+    <script>
+        function searchProducts() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("ProductInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
+
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+{%  block extra_js %}{% endblock %}
+
+</html>
