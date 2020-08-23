@@ -83,7 +83,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name="Nombre")
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
-    qty = models.PositiveIntegerField(default=1)
+    qty = models.DecimalField("Cantidad/Kg", default=1, decimal_places=2, max_digits=20)
     price = models.DecimalField("Precio" ,default=0.00, decimal_places=2, max_digits=20)
     discount_price = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
     final_price = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)

@@ -30,17 +30,46 @@ function isInt(n){
 }
 
 function update_price_quantity(event) {
-    let qty = parseFloat(event.value)
-    console.log("qty: ", qty) ;
-    if (Number.isNaN(qty)){
-    console.log("not valid float") ;
-    document.getElementById('qty_alrt').innerHTML='<b>La cantidad escrita no es una cantidad valida!!!</b>';
+    let qty = event.value
 
-    }
-    else{
+    var qty_to_send = qty.replace(",", "-");
 
-    document.getElementById('qty_alrt').innerHTML= ' ';
-    }
+    qty_to_send = qty_to_send.replace(".", "-");
+
+    //if (Number.isNaN(qty)){
+    //console.log("not valid float") ;
+    //document.getElementById('qty_alrt').innerHTML='<b>La cantidad escrita no es una cantidad valida!!!</b>';
+
+    //}
+    //else{
+
+    //document.getElementById('qty_alrt').innerHTML= ' ';
+   // }
+
+        const input = $(event);
+        const url = input.attr('data-href') + qty_to_send;
+        console.log("input:", input);
+        console.log("url:", url);
+
+        $.ajax({
+            method: 'GET',
+            url: url,
+            dataType: 'json',
+
+            success: function (data) {
+
+            $('#order_item_container').html(data.result)
+            },
+      error: function (xhr, ajaxOptions, thrownError) {
+
+        //alert(xhr.status);
+        //alert(thrownError);
+        alert("La cantidad digitada es incorrecta");
+        event.value = "";
+      }
+        })
 
 }
+
+
     </script>

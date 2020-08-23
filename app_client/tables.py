@@ -30,17 +30,17 @@ class ProductTable(tables.Table):
     class Meta:
         model = Product
         template_name = 'django_tables2/bootstrap.html'
-        fields = ['title', 'category', 'tag_final_value']
+        fields = ['title', 'category','unidad_o_kg', 'tag_final_value']
 
 
 
 
 class OrderItemTable(tables.Table):
     TEMPLATE = """
-    <input onkeyup="update_price_quantity(this)" style="width:25%" maxlength="5" name="qty" type="text"/>
+    <input  onfocusout="update_price_quantity(this)"  style="width:40%" maxlength="5" name="qty" type="text" class="modify_qty" data-href="{% url "client_ajax_input_modify" record.id "modify" 0 %}"/>
     """
     tag_final_price = tables.Column(orderable=False, verbose_name='Precio')
-    qty = tables.TemplateColumn(TEMPLATE, verbose_name='Cantidad(decimales con .)',orderable=False)
+    qty_input = tables.TemplateColumn(TEMPLATE, verbose_name=' ',orderable=False)
     acción = tables.TemplateColumn('''
             <button data-href="{% url "client_ajax_modify" record.id "add" %}" class="btn btn-success edit_button"><i class="fa fa-arrow-up"></i></button>
             <button data-href="{% url "client_ajax_modify" record.id "remove" %}" class="btn btn-warning edit_button"><i class="fa fa-arrow-down"></i></button>
@@ -50,4 +50,4 @@ class OrderItemTable(tables.Table):
     class Meta:
         model = OrderItem
         template_name = 'django_tables2/bootstrap.html'
-        fields = ['product', 'tag_final_price', 'qty']
+        fields = ['product', 'product.category', 'tag_final_price','product.unidad_o_kg' ,'qty']

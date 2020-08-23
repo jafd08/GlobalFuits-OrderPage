@@ -18,6 +18,10 @@
         evt.preventDefault();
         const btn = $(this);
         const url = btn.attr('data-href');
+
+        console.log("btn: " , btn)
+        console.log("url: " , url)
+
         $.ajax({
             method: 'GET',
             url: url,
@@ -44,6 +48,10 @@
             }
         })
     })
+
+
+
+
 
 
 </script>

@@ -48,6 +48,26 @@ def home(request):
 
     return render(request, 'app_client/home.html', {'excel_file_name': excel_filename.excel_file, 'products':products, "user_firstname":user_firstname})
 
+def PricesView(request):
+    products = Product.objects
+    excel_filename = get_object_or_404(Precios_Excel, nombre="precios")
+    #print("excel_filename.excel_file: ", excel_filename.excel_file)
+    user_firstname = " "
+
+    try:
+        logged_user = request.user
+        user_obj = get_object_or_404(User, username=logged_user)
+        requestor_obj = get_object_or_404(Profile, user=user_obj)
+        fullname_splitted = requestor_obj.fullname.split()
+
+        user_firstname = fullname_splitted[0]
+
+    except:
+        print("no logged in user")
+
+    return render(request, 'app_client/precios.html', {'excel_file_name': excel_filename.excel_file, 'products':products, "user_firstname":user_firstname})
+
+
 @login_required
 def myOrders(request):
     return render(request, 'app_client/home.html')
@@ -244,3 +264,41 @@ class OrderListView(ListView):
         context.update(locals())
         return context
 """" HERE ARE THE CLIENT VIEW MY ORDERS"""
+
+
+
+@login_required
+def client_ajax_input_modify(request, pk ,action, qty_float):
+    #print("INTO client_ajax_input_modify")
+    order_item = get_object_or_404(OrderItem, id=pk)
+    product = order_item.product
+    instance = order_item.order
+
+    #print("qty_float: ", qty_float)
+    qty_float = qty_float.replace("-", ".")
+    qty_float = float(qty_float)
+    #print("qty_float: ", qty_float)
+
+
+
+    if action == 'modify':
+        order_item.qty = qty_float
+        product.qty = qty_float
+
+    product.save()
+    order_item.save()
+
+    if action == 'delete':
+        order_item.delete()
+    data = dict()
+    instance.refresh_from_db()
+    order_items = OrderItemTable(instance.order_items.all())
+    RequestConfig(request).configure(order_items)
+    data['result'] = render_to_string(template_name='app_client/include/client_order_container.html',
+                                      request=request,
+                                      context={
+                                          'instance': instance,
+                                          'order_items': order_items
+                                      }
+                                      )
+    return JsonResponse(data)
