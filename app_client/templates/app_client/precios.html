@@ -33,13 +33,12 @@
 
                 <tbody id='tbodyFVID'>
                     {% for product in products.all %}
-                    {% if product.category.title == "Verduras" or product.category.title == "Frutas" %}
                     <tr>
                         <td> {{product.title}}</td>
                         <td> {{product.measure}} </td>
                         <td>{{product.value}}₡ </td>
                     </tr>
-                    {% endif %}
+
                     {% endfor %}
                 </tbody>
             </table>

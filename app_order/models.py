@@ -22,6 +22,16 @@ class OrderManager(models.Manager):
     def active(self):
         return self.filter(active=True)
 
+class Status(models.Model):
+    name = models.CharField(max_length=150, unique=True,null=False, default="Abierto")
+
+    class Meta:
+        verbose_name_plural = 'Estados'
+
+    def __str__(self):
+        return self.name
+
+
 DEFAULT_REQUESTOR_ID= 1
 class Order(models.Model):
     date = models.DateField("fecha" , default=timezone.now)
@@ -30,9 +40,10 @@ class Order(models.Model):
     timestamp = models.DateField(auto_now_add=True)
     value = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
     discount = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
-
     final_value = models.DecimalField("precio" , default=0.00, decimal_places=2, max_digits=20)
     is_paid = models.BooleanField(default=False)
+    comments = models.CharField("Comentarios" , max_length=200, null=True, default="No hay comentarios")
+    status = models.ForeignKey(Status, null=False,default=1, on_delete=models.PROTECT, verbose_name="Estado Orden")
     objects = models.Manager()
     browser = OrderManager()
 

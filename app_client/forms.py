@@ -13,9 +13,9 @@ class BaseForm(forms.Form):
 
 
 class OrderCreateForm(BaseForm, forms.ModelForm):
-    date = forms.DateField(label="Fecha de Entrega", widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="Fecha de Entrega", widget=forms.DateInput(attrs={'type': 'date', 'style':'width:auto'}))
     #requestor = forms.ChoiceField(widget=forms.Select(attrs={'disabled': 'disabled'}))
-
+    title = forms.CharField(label="Titulo", widget=forms.TextInput(attrs={'style':'width:auto'}))
     class Meta:
         model = Order
         #fields = ['requestor','date', 'title' , ]

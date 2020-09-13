@@ -1,60 +1,125 @@
 {% extends 'base.html' %} {% load render_table from django_tables2 %}
 
 {% block extra_js %}
-    {% include 'ajax_calls.html' %}
-    {% include 'include/js.html' %}
+{% include 'ajax_calls.html' %}
+{% include 'include/js.html' %}
+
+<script>
+
+    var save_order_a = document.getElementById("save_order")
+    document.getElementById('addt_comments_textarea').value
+
+    var addt_comments = document.getElementById("addt_comments_textarea")
+    var addt_comments_val = addt_comments.value
+    console.log("addt_comments_val: ", addt_comments_val);
+
+    if (addt_comments_val == " No hay comentarios" || addt_comments_val == "  No hay comentarios") {
+        addt_comments.value = ""
+    }
+
+    $('#addt_comments_textarea').focusout(function (evt) {
+        var save_href = save_order_a.href
+
+        addt_comments_val = addt_comments.value // again because we want to check current value
+
+        // addt_comments_val = addt_comments_val.replace(/\s/g, '')
+        // console.log("addt_comments_val: ", addt_comments_val);
+
+        if (addt_comments_val && addt_comments_val.replace(/\s/g, '').length) {
+            var edited_href = save_href.slice(0, -1) + addt_comments_val;
+            save_order_a.href = edited_href
+
+        }
+        else {
+            save_order_a.href = save_href.slice(0, -1) + "No hay comentarios"
+        }
+
+
+
+
+    })
+
+    // $('#save_order').click(function (evt) {
+    //     evt.preventDefault(); //for testing
+    // })
+
+
+    // $('#save_order').click(function (evt) {
+    //     evt.preventDefault();
+    //     console.log("evt save order: ", evt)
+    //     var addit_comments = document.getElementById("addt_comments_textarea")
+    //     if (addt_comments_val == "") {
+    //         addt_comments_val = " No hay comentarios"
+    //     }
+    //     const btn = $(this);
+    //     const url = btn.attr('href')
+    //     //const edited_url = url.slice(0, -1) + addt_comments_val;
+    //     //console.log("edited_url: ", edited_url);
+    //     $.ajax({
+    //         method: 'GET',
+    //         dataType: 'json',
+    //         url: url,
+    //         success: function (data) {
+    //             $('#order_item_container').html(data.result)
+    //         }
+    //     })
+    // });
+
+</script>
 {% endblock %}
 
 
 
 {% block content %}
-    <div class="page-wrapper">
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">{{ instance.date }} - {{ instance }}</h4>
-                    <div class="ml-auto text-right">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{% url 'home' %}">Pagina Principal</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ instance }}</li>
-                            </ol>
-                        </nav>
-                    </div>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row" style="padding-right: 25px; padding-left: 25px;">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">{{ instance }}</h4>
+                <hr />
+                <h4 class="page-title">Fecha de entrega: {{ instance.date }}</h4>
+
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'myOrders_name' %}">Mis Ordenes</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ instance }}</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6" style="padding:0px;">
-                    <div class="card">
-                        <div class="header">
-                            <h5 class="card-title" style="padding:10px">Productos</h5>
-                            <input data-href='{% url "client_ajax-search" instance.id %}' type="text" class="form-control search_button" placeholder="Search">
 
-                        </div>
-                        <div class="card-body" id="product_container">
-
-
-                            {% include 'app_client/include/client_product_container.html' %}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div id='order_item_container' class="card-body">
-                            <div id="qty_alrt" style="fontWeight:bold"></div>
-                            {% include 'app_client/include/client_order_container.html' %}
-                        </div>
-                    </div>
-
-
-            </div>
-        </div>
         </div>
     </div>
+    <div class="container-fluid" style="padding-right: 25px; padding-left: 25px;">
+        <div class="row">
+            <div class="col-md-6" style="padding:0px;">
+                <div class="card">
+                    <div class="header">
+                        <h5 class="card-title" style="padding:10px">Productos</h5>
+                        <input data-href='{% url "client_ajax-search" instance.id %}' type="text"
+                            class="form-control search_button" placeholder="Search">
+
+                    </div>
+                    <div class="card-body" id="product_container">
+
+
+                        {% include 'app_client/include/client_product_container.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div id='order_item_container' class="card-body">
+                        <div id="qty_alrt" style="fontWeight:bold"></div>
+                        {% include 'app_client/include/client_order_container.html' %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
-
-
-

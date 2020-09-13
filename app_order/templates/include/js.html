@@ -36,20 +36,12 @@ function update_price_quantity(event) {
 
     qty_to_send = qty_to_send.replace(".", "-");
 
-    //if (Number.isNaN(qty)){
-    //console.log("not valid float") ;
-    //document.getElementById('qty_alrt').innerHTML='<b>La cantidad escrita no es una cantidad valida!!!</b>';
 
-    //}
-    //else{
-
-    //document.getElementById('qty_alrt').innerHTML= ' ';
-   // }
 
         const input = $(event);
         const url = input.attr('data-href') + qty_to_send;
-        console.log("input:", input);
-        console.log("url:", url);
+        //console.log("input:", input);
+        //console.log("url:", url);
 
         $.ajax({
             method: 'GET',
@@ -70,6 +62,9 @@ function update_price_quantity(event) {
         })
 
 }
+
+
+
 
 
     </script>

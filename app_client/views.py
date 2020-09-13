@@ -234,8 +234,15 @@ class Client_OrderUpdateView(UpdateView):
         return context
 
 @login_required
-def client_done_order_view(request, pk):
+def client_done_order_view(request, pk, addt_comments=" No hay comentarios"):
+
     instance = get_object_or_404(Order, id=pk)
+
+    print("addt_comments: ", addt_comments)
+    if (addt_comments != "0"):
+        print("addt comments doesnt equals 0 ... saving addt here")
+        instance.comments = addt_comments
+
     #instance.is_paid = True
     instance.save()
     return redirect(reverse('myOrders_name'))
