@@ -14,8 +14,8 @@
 <div id="main_box_gfruits" class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     <div class="col-md-5 p-lg-5 mx-auto my-5">
       <h1 class="display-4 font-weight-normal">GlobalFruits</h1>
-      <p class="lead font-weight-normal">"descripcion"</p>
-      <a class="btn btn-outline-primary" href="#">Ver precios</a>
+      <p class="lead font-weight-normal">Lo mas fresco en verduras y frutas de Costa Rica</p>
+      <a class="btn btn-success" href="{% url 'client_prices' %}">Ver precios</a>
     </div>
     <!-- <div class="product-device shadow-sm d-none d-md-block"></div>
     <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div> -->
@@ -36,6 +36,7 @@
         <p class="lead">And an even wittier subheading.</p>
       </div>
       <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+
     </div>
   </div>
 
@@ -55,75 +56,6 @@
       <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
   </div>
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm border-right">
-            <h6> Frutas y Verduras! </h6>
-
-
-            <table class="table table--striped table--lined table--loose" id='FV_table'>
-                <thead>
-                    <tr>
-                        <th class="tableHeaders1"> Producto <span class="sort-indicator icon-dropdown"
-                                title=" Sort "></span></th>
-                        <th class="tableHeaders1"> <span class="sort-indicator icon-dropdown" title=" Sort "></span>
-                        </th>
-                        <th class="tableHeaders1">Precio <span class="sort-indicator icon-dropdown"
-                                title=" Sort "></span></th>
-
-                    </tr>
-                </thead>
-
-                <tbody id='tbodyFVID'>
-                    {% for product in products.all %}
-                    {% if product.category.title == "Verduras" or product.category.title == "Frutas" %}
-                    <tr>
-                        <td> {{product.title}}</td>
-                        <td> {{product.unidad_o_kg}} </td>
-                        <td>{{product.value}}₡ </td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm border-right">
-            <h6> Productos listos para consumir! </h6>
-
-
-            <table class="table table--striped table--lined table--loose" id='table_consumo'>
-                <thead>
-                    <tr>
-                        <th class="tableHeaders1"> Producto <span class="sort-indicator icon-dropdown"
-                                title=" Sort "></span></th>
-                        <th class="tableHeaders1"> Cantidad <span class="sort-indicator icon-dropdown"
-                                title=" Sort "></span></th>
-                        <th class="tableHeaders1">Precio <span class="sort-indicator icon-dropdown"
-                                title=" Sort "></span></th>
-
-                    </tr>
-                </thead>
-
-                <tbody id='tbody_consumo'>
-                    {% for product in products.all %}
-
-                    {% if product.category.title == "Productos listos" %}
-                    <tr>
-                        <td> {{product.title}}</td>
-                        <td> {{product.unidad_o_kg}} </td>
-                        <td>{{product.value}}₡ </td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</div>
 
 
 <script>
@@ -156,7 +88,8 @@
 </script>
 
 <script>
-    document.getElementById("main_box_gfruits").setAttribute('style', "background-image: url(\'{% static 'fruits_wallpaper2.jpg' %}\')")
+    //document.getElementById("main_box_gfruits").setAttribute('style', "background-image: url(\'{% static 'fruits_wallpaper2.jpg' %}\')")
+    document.getElementById("main_box_gfruits").setAttribute('style', "background-image: url(\'{% static 'img/madera_portada.jpg' %}\')")
   </script>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 {% load render_table from django_tables2 %}
 <h5 class="card-title">Detalle de la Orden</h5>
+<h6 class="page-title">Estado de Orden: {{ instance.status }}</h6>
 <div class="table-responsive">
     {% render_table order_items %}
 </div>
@@ -11,24 +12,15 @@
     </div>
     <div class="clearfix"></div>
     <hr>
+    <div class="form-group">
+            <textarea class="form-control" id="addt_comments_textarea" placeholder="Comentarios Adicionales..."> {{ instance.comments }}</textarea>
+
+    </div>
     <div class="text-right">
-        <a href="{% url 'client_done_order' instance.id %}" class="btn btn-success" type="submit"> Guardar Pedido </a>
-        <a onclick="return confirm('Are you sure?')" href="{% url 'delete_order' instance.id %}" class="btn btn-danger"> Eliminar Pedido </a>
+        <a href="{% url 'client_done_order2' instance.id 0 %}" id="save_order" class="btn btn-success" type="submit"> Guardar Pedido </a>
+        <a onclick="return confirm('Estas seguro?')" href="{% url 'delete_order' instance.id %}"  class="btn btn-danger"> Eliminar Pedido </a>
     </div>
 </div>
-<script>
-    $('.edit_button').click(function (evt) {
-        evt.preventDefault();
-        const btn = $(this);
-        const url = btn.attr('data-href');
-        $.ajax({
-            method: 'GET',
-            url: url,
-            dataType: 'json',
 
-            success: function (data) {
-                $('#order_item_container').html(data.result)
-            }
-        })
-    });
-</script>
+
+

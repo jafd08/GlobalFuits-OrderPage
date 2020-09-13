@@ -49,7 +49,7 @@ class Product(models.Model):
         return self.title
 
     def tag_final_value(self):
-        return f'{self.final_value} {CURRENCY}'
-    tag_final_value.short_description = 'Value'
+        return f'{self.final_value}{CURRENCY}'
+    tag_final_value.short_description = 'Valor'
 
 

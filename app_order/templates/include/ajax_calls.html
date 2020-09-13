@@ -15,6 +15,7 @@
     });
     
     $('.edit_button').click(function (evt) {
+    console.log("evt: ", evt);
         evt.preventDefault();
         const btn = $(this);
         const url = btn.attr('data-href');

@@ -13,6 +13,7 @@ urlpatterns = [
     path('ajax/search-products/<int:pk>/', ajax_search_products, name='client_ajax-search'),
     path('ajax/add-product/<int:pk>/<int:dk>/', ajax_add_product, name='client_ajax_add'),
     path('ajax/modify-product/<int:pk>/<slug:action>', ajax_modify_order_item, name='client_ajax_modify'),
-    path('done/<int:pk>/', client_done_order_view, name='client_done_order'),
+    path('done/<int:pk>', client_done_order_view, name='client_done_order'),
+    path('done/<int:pk>/<str:addt_comments>', client_done_order_view, name='client_done_order2'),
     path('ajax/modify-product/<int:pk>/<slug:action>/<slug:qty_float>', client_ajax_input_modify, name='client_ajax_input_modify'),
               ]

@@ -7,7 +7,7 @@
             method: 'GET',
             dataType: 'json',
             url: url,
-            success : function (data) {
+            success: function (data) {
                 $('#order_item_container').html(data.result)
             }
         })
@@ -34,13 +34,16 @@
         const val = btn.val();
         const url = btn.attr('data-href');
         $.ajax({
-            method:'GET',
+            method: 'GET',
             dataType: 'json',
-            url: url + '?q='+val,
+            url: url + '?q=' + val,
 
             success: function (data) {
                 $('#product_container').html(data.products)
             }
         })
     })
+
+    
+
 </script>
