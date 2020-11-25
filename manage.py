@@ -30,7 +30,10 @@ cd OrderPageDjango
 
 cd blog_pos
 
-py manage.py runserver"""
+py manage.py runserver
+
+updatingcode3 test
+"""
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blog_pos.settings')
