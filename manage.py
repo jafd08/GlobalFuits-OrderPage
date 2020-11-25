@@ -32,7 +32,6 @@ cd blog_pos
 
 py manage.py runserver
 
-updatingcode3 test
 """
 
 def main():
