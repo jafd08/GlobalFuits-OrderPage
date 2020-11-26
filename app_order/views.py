@@ -58,7 +58,8 @@ def auto_create_order_view(request):
         date=datetime.datetime.now(),
         requestor=requestor_obj
     )
-    new_order.title = f'Orden Num:{new_order.id} Creada por:{logged_user}'
+    new_order.title = 'Orden Num:{} Creada por:{}'.format(
+        new_order.id, logged_user)
     new_order.save()
     return redirect(new_order.get_edit_url())
 
