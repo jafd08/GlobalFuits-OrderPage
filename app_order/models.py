@@ -121,7 +121,7 @@ class OrderItem(models.Model):
         default=0.00, decimal_places=2, max_digits=20)
 
     def __str__(self):
-        return f'{self.product.title}'
+        return self.product.title
 
     def save(self, *args, **kwargs):
         self.final_price = self.discount_price if self.discount_price > 0 else self.price
@@ -130,13 +130,13 @@ class OrderItem(models.Model):
         self.order.save()
 
     def tag_final_price(self):
-        return f'{self.final_price} {CURRENCY}'
+        return self.final_price + " " + CURRENCY
 
     def tag_discount(self):
-        return f'{self.discount_price} {CURRENCY}'
+        return self.discount_price + " " + CURRENCY
 
     def tag_price(self):
-        return f'{self.price} {CURRENCY}'
+        return self.price + " " + CURRENCY
 
 
 @receiver(post_delete, sender=OrderItem)
