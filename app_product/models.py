@@ -4,6 +4,7 @@ from .managers import ProductManager
 
 CURRENCY = settings.CURRENCY
 
+
 class Category(models.Model):
     title = models.CharField(max_length=150, unique=True, null=False)
 
@@ -54,6 +55,6 @@ class Product(models.Model):
         return self.title
 
     def tag_final_value(self):
-        return f'{self.final_value} {CURRENCY}'
+        return self.final_value + CURRENCY
 
     tag_final_value.short_description = 'Valor'
