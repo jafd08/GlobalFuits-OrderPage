@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="31a8eb07-e658-470a-a317-85f498574653" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_pos/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog_pos/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="F:\DJANGO GlobalFruits\OrderPage\OrderPageDjango_tobe2-2-5\blog_pos\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1kP0kzI5Mq4aUP2cFlPyR4zACDc" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="31a8eb07-e658-470a-a317-85f498574653" name="Default Changelist" comment="" />
+      <created>1605587065766</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605587065766</updated>
+    </task>
+    <task id="LOCAL-00001" summary="first commit branch">
+      <created>1605587508587</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605587508587</updated>
+    </task>
+    <task id="LOCAL-00002" summary="first commit branch 22">
+      <created>1605587625531</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1605587625531</updated>
+    </task>
+    <task id="LOCAL-00003" summary="first commit branch 3">
+      <created>1605588179487</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1605588179487</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="first commit branch" />
+    <MESSAGE value="first commit branch 22" />
+    <MESSAGE value="first commit branch 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit branch 3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="719" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605589000321">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="719" y="323" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.10.1920.1040@0.0.1920.1040" timestamp="1605589000321" />
+    <state x="554" y="111" key="CommitChangelistDialog2" timestamp="1605588178822">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="554" y="111" key="CommitChangelistDialog2/0.0.1920.1040/-1920.10.1920.1040@0.0.1920.1040" timestamp="1605588178822" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1605588030820">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.10.1920.1040@0.0.1920.1040" timestamp="1605588030820" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1605588184657">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.10.1920.1040@0.0.1920.1040" timestamp="1605588184657" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1606278570995">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.10.1920.1040@0.0.1920.1040" timestamp="1606278570995" />
+    <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605588060256">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.10.1920.1040@0.0.1920.1040" timestamp="1605588060256" />
+  </component>
+</project>
