@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': 'gfruitsdb',
         'USER': 'postgres',
         'PASSWORD': 'testPostgres123',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -136,6 +136,13 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #media is the folder. git ignore has this as ignored
+# media is the folder. git ignore has this as ignored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = '/media/' #this is to access the media
+MEDIA_URL = '/media/'  # this is to access the media
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
