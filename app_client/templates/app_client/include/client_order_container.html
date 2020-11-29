@@ -1,24 +1,31 @@
 {% load render_table from django_tables2 %}
 <h5 class="card-title">Detalle de la Orden</h5>
-<h6 class="page-title">Estado de Orden: {{ instance.status }}</h6>
+
+
+<div class="pull-right m-t-30 text-right">
+    <h6 class="page-title"> <b> Estado:</b> {{ instance.status }}</h6>
+    <h6 class="page-title"> <b> Creado el:</b> {{ instance.timestamp }}</h6>
+    <h6 class="page-title"> <b> Fecha de Entrega:</b> {{ instance.date }}</h6>
+</div>
+
 <div class="table-responsive">
     {% render_table order_items %}
 </div>
+
 <div class="col-md-12">
     <div class="pull-right m-t-30 text-right">
-        <p>Valor: {{ instance.tag_value }}</p>
+<!--        <p>Valor: {{ instance.tag_value }}</p>-->
         <hr>
-        <h3><b>Total :</b> {{ instance.tag_final_value }}</h3>
+        <h3><b>Total Orden:</b> {{ instance.tag_final_value }}</h3>
     </div>
     <div class="clearfix"></div>
     <hr>
     <div class="form-group">
             <textarea class="form-control" id="addt_comments_textarea" placeholder="Comentarios Adicionales..."> {{ instance.comments }}</textarea>
-
     </div>
     <div class="text-right">
         <a href="{% url 'client_done_order2' instance.id 0 %}" id="save_order" class="btn btn-success" type="submit"> Guardar Pedido </a>
-        <a onclick="return confirm('Estas seguro?')" href="{% url 'delete_order' instance.id %}"  class="btn btn-danger"> Eliminar Pedido </a>
+        <a onclick="return confirm('Estas seguro?')" href="{% url 'client_delete_order' instance.id %}"  class="btn btn-danger"> Eliminar Pedido </a>
     </div>
 </div>
 

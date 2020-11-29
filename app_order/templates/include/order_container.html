@@ -1,5 +1,12 @@
 {% load render_table from django_tables2 %}
 <h5 class="card-title">Order Detail</h5>
+
+<div class="pull-right m-t-30 text-right">
+    <h6 class="page-title"> <b> Estado:</b> {{ instance.status }}</h6>
+    <h6 class="page-title"> <b> Creado el:</b> {{ instance.timestamp }}</h6>
+    <h6 class="page-title"> <b> Fecha de Entrega:</b> {{ instance.date }}</h6>
+</div>
+
 <div class="table-responsive">
     {% render_table order_items %}
 </div>

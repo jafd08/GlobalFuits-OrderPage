@@ -3,60 +3,74 @@
 {% block content %}
 
 <head>
+	
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"></script>
     {% load staticfiles %}
+	<meta name="description" content="GLOBALFRUITS surge de años de experiencia en la comercialización y venta de alimentos, frutas, hortalizas y verduras al por mayor y al por menor a diferentes clientes.  Somos una empresa dedicada a la atención del cliente y lograr que se sienta satisfecho.">
 </head>
 
 <br>
 <br>
-<div id="main_box_gfruits" class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+<div id="main_box_gfruits" class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" >
     <div class="col-md-5 p-lg-5 mx-auto my-5">
       <h1 class="display-4 font-weight-normal">GlobalFruits</h1>
       <p class="lead font-weight-normal">Lo mas fresco en verduras y frutas de Costa Rica</p>
       <a class="btn btn-success" href="{% url 'client_prices' %}">Ver precios</a>
     </div>
-    <!-- <div class="product-device shadow-sm d-none d-md-block"></div>
-    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div> -->
 
   </div>
 
   <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
+
+      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: auto; border-radius: 21px 21px 0 0;">
+          <img src="{% static 'img/Globalf_domicilio1.jpg' %}" style="max-width:100%; height:auto;">
+
       </div>
-      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 p-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
+
+      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: auto; border-radius: 21px 21px 0 0;">
+          <img src="{% static 'img/pinas.jpg' %}" style="max-width:100%; height:auto;">
       </div>
-      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
 
     </div>
   </div>
 
-  <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 p-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
+ <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+
+      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: auto; border-radius: 21px 21px 0 0;">
+          <img src="{% static 'img/tequenos.jpg' %}" style="max-width:100%; height:auto;">
+
       </div>
-      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
     </div>
-    <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">Another headline</h2>
-        <p class="lead">And an even wittier subheading.</p>
+    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: auto; border-radius: 21px 21px 0 0;">
+          <img  src="{% static 'img/durian.jpg' %}" style="max-width:100%; height:auto;">
       </div>
-      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+
     </div>
   </div>
 
+ <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+
+      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: auto; border-radius: 21px 21px 0 0;">
+          <img src="{% static 'img/pizzachube.jpg' %}" style="max-width:100%; height:auto;">
+
+      </div>
+    </div>
+    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+
+      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: auto; border-radius: 21px 21px 0 0;">
+          <img  src="{% static 'img/granola.jpg' %}" style="max-width:100%; height:auto;">
+      </div>
+
+    </div>
+  </div>
 
 <script>
 
@@ -89,7 +103,8 @@
 
 <script>
     //document.getElementById("main_box_gfruits").setAttribute('style', "background-image: url(\'{% static 'fruits_wallpaper2.jpg' %}\')")
-    document.getElementById("main_box_gfruits").setAttribute('style', "background-image: url(\'{% static 'img/madera_portada.jpg' %}\')")
+    document.getElementById("main_box_gfruits").setAttribute('style', "background-image: url(\'{% static 'img/madera_portada.jpg' %}\'); color:white;")
+    //document.getElementById("main_box_gfruits").setAttribute('style', "background-image: url(\'{% static 'img/fotogfruit1.jpg' %}\'); color:white;")
   </script>
 
 {% endblock %}

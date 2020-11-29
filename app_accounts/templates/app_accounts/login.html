@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<div class="card-body">
 <h1>Acceder</h1>
 
 <form method="post" action="{% url 'loginName' %}">
@@ -17,10 +18,13 @@
 
     {% if error %}
     {{error}}
+    <br>
+    Puedes crear una cuenta dando click <a href="{% url 'register_name2' %}"> aqui </a>
     {% endif %}
 
     <br>
     <input class="btn btn-primary" type="submit" value="Acceder">
 </form>
+</div>
 {% endblock %}
 

@@ -11,8 +11,8 @@
 
 <div class="container">
     <h2>Lista de Precios</h2>
-<br>
-<br>
+    <h6> <b>Nota:</b> Los precios de las frutas y vegetales varían según el mercado</h6>
+    <br>
     <div class="row">
         <div class="col-sm border-right">
             <h6> Frutas y Verduras! </h6>
@@ -44,7 +44,7 @@
             </table>
         </div>
         <div class="col-sm border-right">
-            <h6> Productos listos para consumir! </h6>
+            <h6> Productos listos para consumir y otros! </h6>
 
 
             <table class="table table--striped table--lined table--loose" id='table_consumo'>
@@ -63,7 +63,7 @@
                 <tbody id='tbody_consumo'>
                     {% for product in products.all %}
 
-                    {% if product.category.title == "Productos listos" or  product.category.title == "Preparados"%}
+                    {% if product.category.title == "Productos listos" or  product.category.title == "Preparados" or product.category.title == "Otros" %}
                     <tr>
                         <td> {{product.title}}</td>
                         <td> {{product.measure}} </td>

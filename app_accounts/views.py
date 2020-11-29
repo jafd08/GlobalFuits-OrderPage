@@ -16,13 +16,17 @@ def register2(request):
                 user = User.objects.get(username=request.POST['username'])
                 return render(request, 'app_accounts/register2.html', {'error': 'Usuario '+ str(user) + ' ya existe.'})
             except User.DoesNotExist:
-                if request.POST['full_name'] and request.POST['phone_number'] and request.POST['address']:
-                    new_user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                if request.POST['first_name'] and request.POST['sec_name'] and request.POST['phone_number'] and request.POST['address']:
+                    new_user = User.objects.create_user(request.POST['username'], password=request.POST['password1'],
+                                                        first_name = request.POST['first_name'],
+                                                        last_name=request.POST['sec_name']  ,
+                                                        email = request.POST['email'])
+
                     new_profile = Profile()
                     new_profile.user = new_user #si no funciona,
                     # hay que buscar el usuario asi: user = User.objects.get(username=request.POST['username'])
                     #para luego meter ese user en el new_profile.user
-                    new_profile.fullname = request.POST['full_name']
+                    new_profile.fullname = request.POST['first_name'] + " " + request.POST['sec_name']
                     new_profile.address = request.POST['address']
                     new_profile.phonenumber = request.POST['phone_number']
                     new_profile.save()
@@ -30,13 +34,13 @@ def register2(request):
                     auth.login(request, new_user)
 
                 else:
-                    return render(request, 'app_accounts/register2.html', {'error': 'Por favor complete todos los campos'})
+                    return render(request, 'app_accounts/register2.html', {'error': 'Por favor complete todos los campos' , 'page_title' : "Registrarse"})
 
 
                 return redirect('home')
-        return render(request, 'app_accounts/register2.html', {'error': 'Passwords must match !'})
+        return render(request, 'app_accounts/register2.html', {'error': 'Las contraseñas deben ser iguales!', 'page_title' : "Registrarse"})
     else:  # User wants to enter info
-        return render(request, 'app_accounts/register2.html')
+        return render(request, 'app_accounts/register2.html', {'page_title' : "Registrarse"})
 
 
 
@@ -47,10 +51,10 @@ def signup(request):
             try:
                 # pw are correctly written
                 user = User.objects.get(username=request.POST['username'])
-                return render(request, 'app_accounts/signup.html', {'error': 'Username '+ str(user) + ' has already been taken'})
+                return render(request, 'app_accounts/signup.html', {'error': 'Username '+ str(user) + ' ya existe.'})
 
             except User.DoesNotExist:
-                user = User.objects.create_user(request.POST['username'], password = request.POST['password1'])
+                user = User.objects.create_user(request.POST['username'], password = request.POST['password1'], email=request.POST['email'])
                 auth.login(request , user)
                 return redirect('home')
         return render(request, 'app_accounts/signup.html', {'error': 'Passwords must match !'})
@@ -65,10 +69,10 @@ def login(request):
             auth.login(request, user)
             return redirect('home')
         else:
-            return render(request, 'app_accounts/login.html', {'error': 'Username or password is incorrect.'})
+            return render(request, 'app_accounts/login.html', {'error': 'Usuario o contraseña incorrecta.', 'page_title' : "Iniciar Sesion"})
 
     else:   # if they are only trying to view login page
-        return render(request, 'app_accounts/login.html')
+        return render(request, 'app_accounts/login.html', {'page_title' : "Iniciar Sesion"})
 
 
 def logout(request):

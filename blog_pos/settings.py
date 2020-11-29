@@ -25,7 +25,7 @@ SECRET_KEY = 'p$p+et03(c)8$_hpu4+a_^((c7(b_f+-rillwz6-#x-)z4rtnu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.100.12', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['django-gfruit-env.eba-igtphpvw.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost', '192.168.100.12']
 
 # Application definition
 
@@ -84,12 +84,8 @@ WSGI_APPLICATION = 'blog_pos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gfruitsdb',
-        'USER': 'postgres',
-        'PASSWORD': 'testPostgres123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -137,13 +133,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
-# media is the folder. git ignore has this as ignored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #media is the folder. git ignore has this as ignored
 
-MEDIA_URL = '/media/'  # this is to access the media
-
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
+MEDIA_URL = '/media/' #this is to access the media

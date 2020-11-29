@@ -34,7 +34,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name="admin_page2"),
     path('admin_homepage', HomepageView.as_view(), name='homepage'),
     path('', home, name='home'),
     path('client-order/', include('app_client.urls')),

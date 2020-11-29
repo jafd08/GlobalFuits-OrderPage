@@ -3,45 +3,55 @@
 {% block content %}
 
 <title>GlobalFruits - Registro</title>
-<h1>Registrarse</h1>
 
-<form method="post" action="{% url 'register_name2' %}">
-    {% csrf_token %}
-    Nombre Completo:
-    <br>
-    <input type="text" name="full_name"/>
-    <br>
-    Usuario:
-    <br>
-    <input type="text" name="username" />
-    <br>
-    Contraseña:
-    <br>
-    <input type="password" name="password1"/>
-    <br>
-    Confirmar Contraseña:
-    <br>
-    <input type="password" name="password2"/>
-    <br>
-    <br>
-    Numero de Telefono:
-    <input type="text" name="phone_number" maxlength="8" size="8"/>
-    <br>
-    Direccion de entrega:
-    <br>
-    <input type="text" name="address" size="50"/>
-    <br>
+<div class="card-body">
+    <h1>Registrarse</h1>
 
-    {% if error %}
-{{error}}
-{% endif %}
+    <form method="post" action="{% url 'register_name2' %}">
+        {% csrf_token %}
+        Nombre:
+        <br>
+        <input type="text" name="first_name" />
+        <br>
+        Apellido:
+        <br>
+        <input type="text" name="sec_name" />
+        <br>
 
-    <br>
-    <br>
-    <input class="btn btn-primary" type="submit" value="Registrarse!">
-</form>
-{% endblock %}
+        Usuario:
+        <br>
+        <input type="text" name="username" />
+        <br>
+        Correo Electronico:
+        <br>
+        <input type="text" name="email" />
+        <br>
+        Contraseña:
+        <br>
+        <input type="password" name="password1" />
+        <br>
+        Confirmar Contraseña:
+        <br>
+        <input type="password" name="password2" />
+        <br>
+        <br>
+        Numero de Telefono:
+        <input type="text" name="phone_number" maxlength="8" size="8" />
+        <br>
+        Direccion de entrega:
+        <br>
+        <input type="text" name="address" size="50" />
+        <br>
 
+        {% if error %}
+        {{error}}
+        {% endif %}
 
+        <br>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Registrarse!">
+    </form>
+    {% endblock %}
+
+</div>
 <br> <Br> <Br>
-

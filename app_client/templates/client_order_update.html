@@ -71,6 +71,9 @@
 
 
 {% block content %}
+
+
+
 <div class="page-wrapper">
     <div class="page-breadcrumb">
         <div class="row" style="padding-right: 25px; padding-left: 25px;">
@@ -99,7 +102,6 @@
                         <h5 class="card-title" style="padding:10px">Productos</h5>
                         <input data-href='{% url "client_ajax-search" instance.id %}' type="text"
                             class="form-control search_button" placeholder="Search">
-
                     </div>
                     <div class="card-body" id="product_container">
 
