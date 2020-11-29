@@ -7,25 +7,21 @@ from .models import Precios_Excel
 from app_product.models import Product
 from app_order.models import Order,OrderItem, CURRENCY
 from app_accounts.models import Profile
-from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+#from django_tables2 import paginators
 
 """" CREATE ORDER IMPORTS"""
 from django.views.generic import ListView, CreateView, UpdateView
-from django.utils.decorators import method_decorator
-from django.contrib.admin.views.decorators import staff_member_required
+
 from django.shortcuts import reverse
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.http import JsonResponse
-from django.db.models import Sum
 from django_tables2 import RequestConfig
 from .forms import OrderCreateForm, OrderEditForm
 from .tables import ProductTable, OrderItemTable, OrderTable
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django import forms
+
 
 # Create your views here.
 
@@ -49,6 +45,7 @@ def home(request):
     return render(request, 'app_client/home.html', {'excel_file_name': excel_filename.excel_file, 'products':products, "user_firstname":user_firstname})
 
 def PricesView(request):
+    page_title = "Precios"
     products = Product.objects
     excel_filename = get_object_or_404(Precios_Excel, nombre="precios")
     #print("excel_filename.excel_file: ", excel_filename.excel_file)
@@ -65,7 +62,7 @@ def PricesView(request):
     except:
         print("no logged in user")
 
-    return render(request, 'app_client/precios.html', {'excel_file_name': excel_filename.excel_file, 'products':products, "user_firstname":user_firstname})
+    return render(request, 'app_client/precios.html', {'excel_file_name': excel_filename.excel_file, 'products':products, "user_firstname":user_firstname , 'page_title':page_title})
 
 
 @login_required
@@ -113,11 +110,11 @@ def ajax_search_products(request, pk):
     instance = get_object_or_404(Order, id=pk)
     q = request.GET.get('q', None)
     products = Product.broswer.active().filter(title__startswith=q) if q else Product.broswer.active()
-    products = products[:12]
+    #products = products[:12]
     products = ProductTable(products)
     RequestConfig(request).configure(products)
     data = dict()
-    data['products'] = render_to_string(template_name='app_client/include/product_container.html',
+    data['products'] = render_to_string(template_name='app_client/include/client_product_container.html',
                                         request=request,
                                         context={
                                             'products': products,
@@ -126,7 +123,7 @@ def ajax_search_products(request, pk):
     return JsonResponse(data)
 
 
-@login_required
+
 def ajax_modify_order_item(request, pk, action):
     order_item = get_object_or_404(OrderItem, id=pk)
     product = order_item.product
@@ -155,15 +152,15 @@ def ajax_modify_order_item(request, pk, action):
                                       )
     return JsonResponse(data)
 
-@login_required
-def delete_order(request, pk):
+
+def client_delete_order(request, pk):
+    print("delete orderr")
     instance = get_object_or_404(Order, id=pk)
     instance.delete()
     messages.warning(request, 'La orden ha sido eliminada!')
-    return redirect(reverse('home'))
+    return redirect(reverse('myOrders_name'))
 
 
-@login_required
 def done_order_view(request, pk):
     instance = get_object_or_404(Order, id=pk)
     instance.is_paid = True
@@ -184,15 +181,17 @@ class CreateOrderView(CreateView):
     # https://stackoverflow.com/questions/54275970/how-to-pass-database-queryset-objects-from-class-based-viewsclass-signupgeneri
 
     def get_context_data(self, **kwargs):
-
         context = super(CreateOrderView, self).get_context_data(**kwargs)
+        context['page_title'] = "Crear Orden"
         return context
 
     def get_success_url(self):
         self.new_object.refresh_from_db()
+
         return reverse('client_update_order', kwargs={'pk': self.new_object.id})
 
     def form_valid(self, form):
+        self.new_object.refresh_from_db()
         logged_user = self.request.user
         user_obj = get_object_or_404(User, username=logged_user)
         requestor_obj = get_object_or_404(Profile, user=user_obj)
@@ -225,22 +224,22 @@ class Client_OrderUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         instance = self.object
-        queryset_products = Product.objects.filter(active=True)[:12]
+        #queryset_products = Product.objects.filter(active=True)[:12]
+        queryset_products = Product.objects.filter(active=True)
         products = ProductTable(queryset_products)
+        #products.paginate(page=self.request.GET.get("page", 0), per_page=5)
+
         order_items = OrderItemTable(instance.order_items.all())
-        RequestConfig(self.request).configure(products)
+        RequestConfig(self.request,paginate={"per_page": 10}).configure(products)
         RequestConfig(self.request).configure(order_items)
         context.update(locals())
+        context["page_title"] = "Mi Orden"
         return context
 
 @login_required
 def client_done_order_view(request, pk, addt_comments=" No hay comentarios"):
-
     instance = get_object_or_404(Order, id=pk)
-
-    print("addt_comments: ", addt_comments)
     if (addt_comments != "0"):
-        print("addt comments doesnt equals 0 ... saving addt here")
         instance.comments = addt_comments
 
     #instance.is_paid = True
@@ -269,6 +268,7 @@ class OrderListView(ListView):
         orders = OrderTable(self.object_list)
         RequestConfig(self.request).configure(orders)
         context.update(locals())
+        context['page_title'] = "Ultimas Ordenes"
         return context
 """" HERE ARE THE CLIENT VIEW MY ORDERS"""
 

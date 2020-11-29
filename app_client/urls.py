@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import  (client_ajax_input_modify, PricesView, Client_OrderUpdateView, CreateOrderView, ajax_search_products, ajax_add_product, ajax_modify_order_item, client_done_order_view, OrderListView)
+from .views import  (client_delete_order,client_ajax_input_modify, PricesView, Client_OrderUpdateView, CreateOrderView, ajax_search_products, ajax_add_product, ajax_modify_order_item, client_done_order_view, OrderListView)
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -15,5 +15,8 @@ urlpatterns = [
     path('ajax/modify-product/<int:pk>/<slug:action>', ajax_modify_order_item, name='client_ajax_modify'),
     path('done/<int:pk>', client_done_order_view, name='client_done_order'),
     path('done/<int:pk>/<str:addt_comments>', client_done_order_view, name='client_done_order2'),
+
+    path('delete/<int:pk>/', client_delete_order, name='client_delete_order'),
+
     path('ajax/modify-product/<int:pk>/<slug:action>/<slug:qty_float>', client_ajax_input_modify, name='client_ajax_input_modify'),
               ]

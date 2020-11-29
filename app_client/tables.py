@@ -23,7 +23,7 @@ class OrderTable(tables.Table):
 
 class ProductTable(tables.Table):
     tag_final_value = tables.Column(orderable=False, verbose_name='Precio')
-    accion = tables.TemplateColumn(
+    acción = tables.TemplateColumn(
         '<button class="btn btn-info add_button" data-href="{% url "client_ajax_add" instance.id record.id %}">Añadir!</a>',
         orderable=False
     )
@@ -31,17 +31,18 @@ class ProductTable(tables.Table):
     class Meta:
         model = Product
         template_name = 'django_tables2/bootstrap.html'
-        fields = ['title', 'category','measure', 'tag_final_value']
+        fields = ['acción','title', 'category','measure', 'tag_final_value']
 
 
 
 
 class OrderItemTable(tables.Table):
     TEMPLATE = """
-    <input  onfocusout="update_price_quantity(this)" placeholder="Digitar Cantidad" title="Digitar Cantidad/Kg"  style="width:80%" maxlength="5" name="qty" type="text" class="modify_qty" data-href="{% url "client_ajax_input_modify" record.id "modify" 0 %}"/>
+    <input type="number" onfocusout="update_price_quantity(this)" placeholder="{{record.product.measure}}" title="{{record.product.measure}}"  style="width:80%" maxlength="5" name="qty" type="text" class="modify_qty" data-href="{% url "client_ajax_input_modify" record.id "modify" 0 %}"/>
     """
     tag_final_price = tables.Column(orderable=False, verbose_name='Precio')
-    qty_input = tables.TemplateColumn(TEMPLATE, verbose_name=' ',orderable=False)
+    total_price_return = tables.Column(orderable=False, verbose_name='Total')
+    qty_input = tables.TemplateColumn(TEMPLATE, verbose_name='Digitar Cantidad',orderable=False)
     acción = tables.TemplateColumn('''  
             <button data-href="{% url "client_ajax_modify" record.id "delete" %}" class="btn btn-danger edit_button"><i class="fa fa-trash"></i></button>
     ''', orderable=False)
@@ -49,4 +50,4 @@ class OrderItemTable(tables.Table):
     class Meta:
         model = OrderItem
         template_name = 'django_tables2/bootstrap.html'
-        fields = ['product', 'tag_final_price','product.measure' ,'qty']
+        fields = ['product', 'tag_final_price' ,'qty','qty_input','total_price_return']

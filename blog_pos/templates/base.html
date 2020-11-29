@@ -4,16 +4,21 @@
 <head>
   {% load staticfiles %}
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-    content="Globalfruits pagina web de precios, administracion de pedidos, preguntas frecuentes y mas.">
+    content="Pagina web oficial de precios, administracion de pedidos, entregas, recetas y mas.">
   <meta name="author" content="Jesus Fung">
   <meta name="generator" content="Jekyll v4.1.1">
-  <title>GlobalFruits</title>
+    {% if page_title %}
+<title>{{page_title}} - Globalfruits CR</title>
+    {% else %}
+    <title>GlobalFruits </title>
+{% endif %}
+
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/product/">
 
-  <!-- Bootstrap core CSS -->
+  <!-- Bootstrap core CSS aa-->
   <link href="{% static 'bootstrap4-5/assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
   <style>
@@ -39,41 +44,68 @@
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1" style="background:darkgreen">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2" href="{% url 'home' %}" aria-label="Inicio">
-          Inicio
-<!--        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"-->
-<!--          stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img"-->
-<!--          viewBox="0 0 24 24" focusable="false">-->
-<!--          <title>GlobalFruits</title>-->
-<!--          <circle cx="12" cy="12" r="10" />-->
-<!--          <path-->
-<!--            d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />-->
-<!--        </svg>-->
-
+<!--  <nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light " style="background:darkgreen">-->
+  <nav class="sticky-top navbar navbar-expand-lg navbar-light " style="background:lightgreen">
+      <a class="navbar-brand" href="{% url 'home' %}" aria-label="Inicio">
+          GlobalFruits
       </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+         <a class="nav-link" href="{% url 'client_prices' %}">Listas de Productos</a>
+            </li>
 
-      <a class="py-2 d-none d-md-inline-block" href="{% url 'client_prices' %}">Listas de Productos</a>
-  <a class="nav-link" href="{% url 'client_create_order' %}"> <span class="fi-plus"
-                                    title="Nuevo Pedido"></span> Crear Pedido </a>
+            <li class="nav-item">
+                       <a class="nav-link" href="{% url 'client_create_order' %}"> <span class="fi-plus" title="Nuevo Pedido"></span> Crear Pedido </a>
 
+            </li>
+
+
+
+
+
+        {% if user.get_username == "admin" or user.get_username == "admin-gfruit" %}
+         <li class="nav-item">
+             <a class="nav-link" href="/admin/app_product/product/">Cambiar Precios</a>
+
+        </li>
+         <li class="nav-item">
+                    <a class="nav-link" href="{% url 'homepage' %}">Administracion de Ordenes</a>
+
+        </li>
+        {% endif %}
+
+<!--        <h2> {{ user.get_full_name }} </h2>-->
        {% if user.is_authenticated %}
 
-      <a class="py-2 d-none d-md-inline-block" href="{% url 'myOrders_name' %}">Mis Ordenes</a>
-    <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"> Cerrar
+         <li class="nav-item">
+                   <a class="nav-link" href="{% url 'myOrders_name' %}">Mis Ordenes</a>
+        </li>
+        </ul>
+
+        <ul class="navbar-nav mr-auto">
+         <li class="nav-item">
+<a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"> Cerrar
                                 sesión </a>
+        </li>
+</ul>
     <form action="{% url 'logoutName' %}" id="logout" method="POST">
                             {% csrf_token %}
                             <input type="hidden" />
                         </form>
 
        {% else %}
+        </ul>
+    <ul class="navbar-nav mr-auto" style="margin-left:50%">
                                   <a class="nav-link" href="{% url 'loginName' %}"> Iniciar Sesión </a>
                             <a class="nav-link" href="{% url 'register_name2' %}"> Crear Cuenta </a>
+</ul>
 
-
-      {% endif%}
+      {% endif %}
     </div>
   </nav>
 
@@ -94,7 +126,11 @@
 <!--            d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />-->
 <!--        </svg>-->
         <small class="d-block mb-3 text-muted">&copy; GlobalFruits 2020</small>
-        <small>Globalfruits CR.. +506 22496161. San José, Costa Rica. Repartimos a domicilio! </small>
+        <small>
+    +506 22496161. <br>
+    San José, Costa Rica.<br>
+    Repartimos a domicilio! </small>
+
       </div>
       <div class="col-6 col-md">
         <h5>Links</h5>
@@ -118,10 +154,7 @@
       <div class="col-6 col-md">
         <h5>Recetas</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Business</a></li>
-          <li><a class="text-muted" href="#">Education</a></li>
-          <li><a class="text-muted" href="#">Government</a></li>
-          <li><a class="text-muted" href="#">Gaming</a></li>
+          <li><a class="text-muted" href="#">*</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
