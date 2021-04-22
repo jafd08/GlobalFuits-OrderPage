@@ -38,9 +38,9 @@ class HomepageView(ListView):
         diviner = total_sales if total_sales > 0 else 1
         paid_percent, remain_percent = round(
             (paid_value/diviner)*100, 1), round((remaining/diviner)*100, 1)
-        total_sales = total_sales + " " + CURRENCY
-        paid_value = paid_value + " " + CURRENCY
-        remaining = remaining + " " + CURRENCY
+        total_sales = str(total_sales) + " " + CURRENCY
+        paid_value = str(paid_value) + " " + CURRENCY
+        remaining = str(remaining) + " " + CURRENCY
         orders = OrderTable(orders)
         RequestConfig(self.request).configure(orders)
         context.update(locals())
