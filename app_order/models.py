@@ -82,13 +82,13 @@ class Order(models.Model):
         return reverse('delete_order', kwargs={'pk': self.id})
 
     def tag_final_value(self):
-        return self.final_value + " " + CURRENCY
+        return str(self.final_value) + " " + CURRENCY
 
     def tag_discount(self):
-        return self.discount + " " + CURRENCY
+        return str(self.discount) + " " + CURRENCY
 
     def tag_value(self):
-        return self.value + " " + CURRENCY
+        return str(self.value) + " " + CURRENCY
 
     @staticmethod
     def filter_data(request, queryset):
