@@ -231,7 +231,7 @@ def delete_order(request, pk):
 @staff_member_required
 def done_order_view(request, pk):
     instance = get_object_or_404(Order, id=pk)
-    instance.is_paid = True
+    #instance.is_paid = True
     instance.save()
     return redirect(reverse('homepage'))
 
