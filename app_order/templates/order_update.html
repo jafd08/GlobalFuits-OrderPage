@@ -5,7 +5,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">{{ instance.date }} - {{ instance }}</h4>
+                    <h4 class="page-title">{{ instance.date }} - {{ instance }} - {{ instance.requestor }}</h4>
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
@@ -22,7 +22,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="header">
-                            <h5 class="card-title">Products</h5>
+                            <h5 class="card-title">Productos</h5>
                             <input data-href='{% url "ajax-search" instance.id %}' type="text" class="form-control search_button" placeholder="Search">
                         </div>
                         <div class="card-body" id="product_container">
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="card">
-                        <div class="header">Edit</div>
+                        <h5 class="card-title">Editar</h5>
                         <div class="card-body">
                             <form method="post" class="form">{% csrf_token %}
                                 {{ form }}
@@ -53,6 +53,21 @@
         </div>
     </div>
 
+<script>
+    function moveIsPaidCheck(){
+        var ispaid_inputcheck = document.getElementById("id_is_paid");
+        console.log("ispaid_inputcheck: ", ispaid_inputcheck);
+        if(ispaid_inputcheck){
+            console.log(" ispaid_inputcheck not null ") ;
+            ispaid_inputcheck.setAttribute("style","width:3%")
+        }
+        else{
+            moveIsPaidCheck()
+        }
+    }
+    moveIsPaidCheck()
+
+</script>
 {% endblock %}
 
 {% block extra_js %}

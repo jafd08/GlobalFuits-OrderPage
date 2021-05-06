@@ -22,7 +22,7 @@ class OrderTable(tables.Table):
 
 
 class ProductTable(tables.Table):
-    tag_final_value = tables.Column(orderable=False, verbose_name='Price')
+    tag_final_value = tables.Column(orderable=False, verbose_name='Precio')
     action = tables.TemplateColumn(
         '<button class="btn btn-info add_button" data-href="{% url "ajax_add" instance.id record.id %}">Add!</a>',
         orderable=False
@@ -35,14 +35,15 @@ class ProductTable(tables.Table):
 
 
 class OrderItemTable(tables.Table):
-    tag_final_price = tables.Column(orderable=False, verbose_name='Price')
+    #tag_final_price = tables.Column(orderable=False, verbose_name='Precio')
+    total_price_return = tables.Column(orderable=False, verbose_name='Sub-Total')
     action = tables.TemplateColumn('''
-            <button data-href="{% url "ajax_modify" record.id "add" %}" class="btn btn-success edit_button"><i class="fa fa-arrow-up"></i></button>
-            <button data-href="{% url "ajax_modify" record.id "remove" %}" class="btn btn-warning edit_button"><i class="fa fa-arrow-down"></i></button>
-            <button data-href="{% url "ajax_modify" record.id "delete" %}" class="btn btn-danger edit_button"><i class="fa fa-trash"></i></button>
-    ''', orderable=False)
+                <button data-href="{% url "ajax_modify" record.id "add" %}" class="btn btn-success edit_button"><i class="fa fa-arrow-up"></i></button>
+                <button data-href="{% url "ajax_modify" record.id "remove" %}" class="btn btn-warning edit_button"><i class="fa fa-arrow-down"></i></button>
+                <button data-href="{% url "ajax_modify" record.id "delete" %}" class="btn btn-danger edit_button"><i class="fa fa-trash"></i></button>
+        ''', orderable=False)
 
     class Meta:
         model = OrderItem
         template_name = 'django_tables2/bootstrap.html'
-        fields = ['product', 'qty', 'tag_final_price']
+        fields = ['product', 'qty', 'total_price_return']

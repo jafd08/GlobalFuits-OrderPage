@@ -28,7 +28,7 @@ class Measure(models.Model):
 class Product(models.Model):
     active = models.BooleanField(default=True)
     title = models.CharField(
-        max_length=150, unique=True, verbose_name="Producto")
+        max_length=150, unique=True, verbose_name="Nombre")
     category = models.ForeignKey(
         Category, null=False, default=1, on_delete=models.PROTECT, verbose_name="Categoria")
     value = models.DecimalField(
@@ -39,7 +39,7 @@ class Product(models.Model):
         default=0.00, decimal_places=2, max_digits=10)
     final_value = models.DecimalField(
         default=0.00, decimal_places=2, max_digits=10)
-    qty = models.PositiveIntegerField(default=0)
+    qty = models.PositiveIntegerField(default=0 , verbose_name="Cantidad Inventario")
 
     objects = models.Manager()
     broswer = ProductManager()
@@ -55,6 +55,6 @@ class Product(models.Model):
         return self.title
 
     def tag_final_value(self):
-        return self.final_value + CURRENCY
+        return str(self.final_value) + CURRENCY
 
     tag_final_value.short_description = 'Valor'

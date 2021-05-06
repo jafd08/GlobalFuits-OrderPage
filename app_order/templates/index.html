@@ -110,8 +110,10 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'homepage' %}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'order_list' %}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Order List</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'homepage' %}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Inicio</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'order_list' %}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Lista de Ordenes</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"  href="/admin/app_order/order/" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Administrar Ordenes</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"  href="/admin/app_product/product/" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Administrar Productos</span></a></li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -132,12 +134,12 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Homepage</h4>
+                        <h4 class="page-title">Inicio</h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Libreria</li>
                                 </ol>
                             </nav>
                         </div>

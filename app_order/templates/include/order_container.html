@@ -2,6 +2,7 @@
 <h5 class="card-title">Order Detail</h5>
 
 <div class="pull-right m-t-30 text-right">
+    <h6 class="page-title"> <b> Comprador:</b> {{ instance.requestor }}</h6>
     <h6 class="page-title"> <b> Estado:</b> {{ instance.status }}</h6>
     <h6 class="page-title"> <b> Creado el:</b> {{ instance.timestamp }}</h6>
     <h6 class="page-title"> <b> Fecha de Entrega:</b> {{ instance.date }}</h6>
@@ -12,8 +13,8 @@
 </div>
 <div class="col-md-12">
     <div class="pull-right m-t-30 text-right">
-        <p>Value: {{ instance.tag_value }}</p>
-        <p>Discount  : {{ instance.tag_discount }} </p>
+        <p>Sub-Total: {{ instance.tag_value }}</p>
+        <p>Descuento  : {{ instance.tag_discount }} </p>
         <hr>
         <h3><b>Total :</b> {{ instance.tag_final_value }}</h3>
     </div>

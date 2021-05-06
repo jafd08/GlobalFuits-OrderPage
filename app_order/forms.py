@@ -13,7 +13,7 @@ class BaseForm(forms.Form):
 
 class OrderCreateForm(BaseForm, forms.ModelForm):
 
-    date = forms.DateField(label="Fecha" , widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(label="Fecha Entrega" , widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Order

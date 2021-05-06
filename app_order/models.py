@@ -16,7 +16,9 @@ from decimal import Decimal
 
 CURRENCY = settings.CURRENCY
 
-
+def returnSTRcurrency( int_var ):
+    toStr = str(int_var)
+    return toStr + " " + CURRENCY
 class OrderManager(models.Manager):
 
     def active(self):
@@ -38,18 +40,18 @@ DEFAULT_REQUESTOR_ID = 1
 
 
 class Order(models.Model):
-    date = models.DateField("fecha", default=timezone.now)
+    date = models.DateField("Fecha Entrega", default=timezone.now)
     requestor = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, default=DEFAULT_REQUESTOR_ID, verbose_name="usuario")
+        Profile, on_delete=models.CASCADE, default=DEFAULT_REQUESTOR_ID, verbose_name="Comprador")
     title = models.CharField("Titulo Nuevo Pedido", max_length=150)
     timestamp = models.DateField(auto_now_add=True)
     created = models.DateTimeField("Fecha Orden Creada", editable=False)
     value = models.DecimalField(default=0.00, decimal_places=2, max_digits=20)
     discount = models.DecimalField(
-        default=0.00, decimal_places=2, max_digits=20)
+        default=0.00, decimal_places=2, max_digits=20, verbose_name="Descuento")
     final_value = models.DecimalField(
         "precio", default=0.00, decimal_places=2, max_digits=20)
-    is_paid = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False, verbose_name="Esta Pagado")
     comments = models.CharField(
         "Comentarios", max_length=200, null=True, default="No hay comentarios")
     status = models    .ForeignKey(
@@ -82,13 +84,14 @@ class Order(models.Model):
         return reverse('delete_order', kwargs={'pk': self.id})
 
     def tag_final_value(self):
-        return str(self.final_value) + " " + CURRENCY
+        return returnSTRcurrency(self.final_value)
+        #return str(self.final_value) + " " + CURRENCY
 
     def tag_discount(self):
-        return str(self.discount) + " " + CURRENCY
+        return returnSTRcurrency(self.discount)
 
     def tag_value(self):
-        return str(self.value) + " " + CURRENCY
+        return returnSTRcurrency(self.value)
 
     @staticmethod
     def filter_data(request, queryset):
@@ -133,16 +136,18 @@ class OrderItem(models.Model):
         self.order.save()
 
     def tag_final_price(self):
-        return self.final_price + " " + CURRENCY
+        return returnSTRcurrency(self.final_price)
 
     def tag_discount(self):
-        return self.discount_price + " " + CURRENCY
+        return returnSTRcurrency(self.discount_price)
 
     def tag_price(self):
-        return self.price + " " + CURRENCY
+        return returnSTRcurrency(self.price)
+
 
     def total_price_return(self):
-        return self.total_price + CURRENCY
+        return returnSTRcurrency(self.total_price)
+
 
 
 @receiver(post_delete, sender=OrderItem)
