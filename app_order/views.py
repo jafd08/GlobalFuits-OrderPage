@@ -20,6 +20,9 @@ from django.contrib.auth.models import User
 
 import datetime
 
+def returnSTRcurrency(int_var):
+    toStr = str(int_var)
+    return CURRENCY  + " " + toStr  
 
 @method_decorator(staff_member_required, name='dispatch')
 class HomepageView(ListView):
@@ -38,9 +41,9 @@ class HomepageView(ListView):
         diviner = total_sales if total_sales > 0 else 1
         paid_percent, remain_percent = round(
             (paid_value/diviner)*100, 1), round((remaining/diviner)*100, 1)
-        total_sales = str(total_sales) + " " + CURRENCY
-        paid_value = str(paid_value) + " " + CURRENCY
-        remaining = str(remaining) + " " + CURRENCY
+        total_sales =  returnSTRcurrency( total_sales )
+        paid_value =  returnSTRcurrency( paid_value )
+        remaining = returnSTRcurrency( remaining )
         orders = OrderTable(orders)
         RequestConfig(self.request).configure(orders)
         context.update(locals())
@@ -71,9 +74,16 @@ class OrderListView(ListView):
     paginate_by = 50
 
     def get_queryset(self):
+        print("get_queryset ")
         qs = Order.objects.all()
         if self.request.GET:
             qs = Order.filter_data(self.request, qs)
+            # print("qs: ", qs)
+            # if not qs:
+            #     print(" qs is null")
+            #     print("self.request: ", self.request)
+
+            #     qs = Order.filter_data(self.request, qs)
         return qs
 
     def get_context_data(self, **kwargs):
@@ -93,8 +103,7 @@ def ajax_calculate_results_view(request):
         total_paid_value = orders.filter(is_paid=True).aggregate(Sum('final_value'))['final_value__sum'] if\
             orders.filter(is_paid=True) else 0
         remaining_value = total_value - total_paid_value
-        total_value, total_paid_value, remaining_value = total_value + " " + \
-            CURRENCY, total_paid_value + " " + CURRENCY, remaining_value + " " + CURRENCY
+        total_value, total_paid_value, remaining_value = returnSTRcurrency(total_value) ,returnSTRcurrency(total_paid_value) , returnSTRcurrency(remaining_value)
 
     data['result'] = render_to_string(template_name='include/result_container.html',
                                       request=request,
@@ -146,8 +155,13 @@ class OrderUpdateView(UpdateView):
 def ajax_search_products(request, pk):
     instance = get_object_or_404(Order, id=pk)
     q = request.GET.get('q', None)
-    products = Product.broswer.active().filter(
-        title__startswith=q) if q else Product.broswer.active()
+    print("q: ", q)
+    if q:
+        products = Product.broswer.active()
+        products = list(filter(lambda x: (x.title.upper().count(q.upper()) > 0 ), products))   
+    else:
+        products = Product.broswer.active()
+
     products = products[:12]
     products = ProductTable(products)
     RequestConfig(request).configure(products)

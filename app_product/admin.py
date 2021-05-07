@@ -21,6 +21,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['active', 'category']
     search_fields = ['title']
     list_per_page = 50
-    fields = ['active', 'title', 'category', 'qty', 'value', 'measure', 'tag_final_value']
+    fields = ['active', 'title', 'category', 'qty', 'value', 'measure']
     autocomplete_fields = ['category']
     readonly_fields = ['tag_final_value']

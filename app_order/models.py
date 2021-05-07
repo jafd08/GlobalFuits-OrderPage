@@ -18,7 +18,9 @@ CURRENCY = settings.CURRENCY
 
 def returnSTRcurrency( int_var ):
     toStr = str(int_var)
-    return toStr + " " + CURRENCY
+    return CURRENCY  + " " + toStr  
+
+    
 class OrderManager(models.Manager):
 
     def active(self):
@@ -98,14 +100,18 @@ class Order(models.Model):
         search_name = request.GET.get('search_name', None)
         date_start = request.GET.get('date_start', None)
         date_end = request.GET.get('date_end', None)
-        queryset = queryset.filter(
-            title__contains=search_name) if search_name else queryset
+        
+        # queryset = queryset.filter(
+        #     title__contains=search_name) if search_name else queryset
+        queryset = list(filter(lambda x: (x.title.upper().count(search_name.upper()) > 0 ), queryset)) \
+            if search_name else queryset   
+
         if date_end and date_start and date_end >= date_start:
             date_start = datetime.datetime.strptime(
                 date_start, '%m/%d/%Y').strftime('%Y-%m-%d')
             date_end = datetime.datetime.strptime(
                 date_end, '%m/%d/%Y').strftime('%Y-%m-%d')
-            print(date_start, date_end)
+            #print(date_start, date_end)
             queryset = queryset.filter(date__range=[date_start, date_end])
         return queryset
 
